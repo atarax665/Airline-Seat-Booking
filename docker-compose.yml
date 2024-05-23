@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  db1:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: airlineDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: dbpassword
+    ports:
+      - "5432:5432"
+    command: postgres -c 'max_connections=1000'
+    volumes:
+      - ./postgres-init/01-create_role.sh:/docker-entrypoint-initdb.d/01-create_role.sh
+      - ./postgres-init/02-create_airlines_schema.sh:/docker-entrypoint-initdb.d/02-create_airlines_schema.sh
